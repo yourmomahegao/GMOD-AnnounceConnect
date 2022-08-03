@@ -1,0 +1,20 @@
+print( "-----------------------" )
+print( "YMA Announce is loading..." )
+
+util.AddNetworkString("AnnounceConnection")
+util.AddNetworkString("AnnounceDisconnect")
+
+gameevent.Listen( "player_connect" )
+hook.Add("player_connect", "AnnounceConnection", function( data )
+	net.Start("AnnounceConnection")
+		net.WriteString(data.name)
+	net.Broadcast()
+end)
+
+gameevent.Listen( "player_disconnect" )
+hook.Add( "player_disconnect", "AnnounceDisconnect", function( data )
+	net.Start("AnnounceDisconnect")
+		net.WriteString(data.name)
+		net.WriteString(data.reason)
+	net.Broadcast()
+end )
